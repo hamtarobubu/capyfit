@@ -56,10 +56,10 @@ export default function Auth() {
       });
 
       if (error) throw error;
-      toast.success('Signed in successfully!');
+      toast.success('Logged in successfully!');
       navigate('/dashboard');
     } catch (error: any) {
-      toast.error(error.message || 'Failed to sign in');
+      toast.error(error.message || 'Failed to log in');
     } finally {
       setLoading(false);
     }
@@ -91,12 +91,12 @@ export default function Auth() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to CapyFit</CardTitle>
-          <CardDescription>Sign in to start your fitness journey with your capybara</CardDescription>
+          <CardDescription>Log in to start your fitness journey with your capybara</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
+              <TabsTrigger value="signin">Log In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
             
@@ -125,7 +125,7 @@ export default function Auth() {
                   />
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Signing in...' : 'Sign In'}
+                  {loading ? 'Logging in...' : 'Log In'}
                 </Button>
               </form>
             </TabsContent>
