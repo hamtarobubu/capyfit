@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bananas: {
+        Row: {
+          banana_count: number
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          banana_count?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          banana_count?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_steps: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          steps: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string
+          id?: string
+          steps?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          steps?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          capybara_name: string
+          created_at: string
+          daily_step_goal: number
+          display_name: string
+          gender: string | null
+          height_cm: number | null
+          id: string
+          updated_at: string
+          weight_kg: number | null
+        }
+        Insert: {
+          capybara_name?: string
+          created_at?: string
+          daily_step_goal?: number
+          display_name: string
+          gender?: string | null
+          height_cm?: number | null
+          id: string
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Update: {
+          capybara_name?: string
+          created_at?: string
+          daily_step_goal?: number
+          display_name?: string
+          gender?: string | null
+          height_cm?: number | null
+          id?: string
+          updated_at?: string
+          weight_kg?: number | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
