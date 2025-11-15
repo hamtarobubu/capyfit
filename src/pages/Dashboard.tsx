@@ -191,7 +191,7 @@ export default function Dashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{capybaraName}'s Status</CardTitle>
+            <CardTitle>How is {capybaraName} feeling today?</CardTitle>
             <CardDescription>
               Keep your capybara happy by feeding them! • {new Date(currentDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </CardDescription>
