@@ -1,78 +1,79 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
+import { getCapybaraData, saveCapybaraData, hasOnboardingData } from '@/utils/localStorageHelper';
 
 export default function Onboarding() {
   const [displayName, setDisplayName] = useState('');
-  const [gender, setGender] = useState('');
-  const [heightCm, setHeightCm] = useState('');
-  const [weightKg, setWeightKg] = useState('');
+  const [gender, setGender] = useState('other');
+  const [height, setHeight] = useState('170');
+  const [weight, setWeight] = useState('70');
   const [dailyStepGoal, setDailyStepGoal] = useState('10000');
-  const [capybaraName, setCapybaraName] = useState('');
+  const [capybaraName, setCapybaraName] = useState('Hamtaro');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/auth');
+    // If user already has onboarding data, redirect to dashboard
+    if (hasOnboardingData()) {
+      navigate('/dashboard');
     }
-  }, [user, navigate]);
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    
+    if (!displayName.trim()) {
+      toast.error('Please enter your name');
+      return;
+    }
 
     setLoading(true);
-
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          display_name: displayName,
-          gender: gender || null,
-          height_cm: heightCm ? parseInt(heightCm) : null,
-          weight_kg: weightKg ? parseFloat(weightKg) : null,
-          daily_step_goal: parseInt(dailyStepGoal),
-          capybara_name: capybaraName || 'Happy',
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
-      toast.success('Profile created successfully!');
+      const data = getCapybaraData();
+      
+      data.userProfile = {
+        displayName: displayName.trim(),
+        gender,
+        height: parseInt(height) || 170,
+        weight: parseInt(weight) || 70,
+      };
+      data.dailyStepGoal = parseInt(dailyStepGoal) || 10000;
+      data.capybaraName = capybaraName.trim() || 'Hamtaro';
+      
+      saveCapybaraData(data);
+      
+      toast.success('Profile created! Welcome to CapyFit! 🎉');
       navigate('/dashboard');
     } catch (error: any) {
-      toast.error(error.message || 'Failed to save profile');
+      toast.error('Failed to save profile');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--grass-green))] via-[hsl(var(--water-blue))] to-[hsl(var(--capybara-brown))] p-4">
-      <Card className="w-full max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--grass-green))] via-[hsl(var(--water-blue))] to-[hsl(var(--capybara-brown))] flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-gradient-to-br from-[hsl(var(--card-gradient-start))] to-[hsl(var(--card-gradient-end))] border-[hsl(var(--card-border))] shadow-[var(--shadow-card)]">
         <CardHeader>
-          <CardTitle className="text-2xl">Complete Your Profile</CardTitle>
-          <CardDescription>Let's get to know you and your capybara companion</CardDescription>
+          <CardTitle className="text-2xl">Welcome to CapyFit!</CardTitle>
+          <CardDescription>Let's set up your profile and meet your capybara</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="displayName">Display Name *</Label>
+              <Label htmlFor="displayName">Your Name</Label>
               <Input
                 id="displayName"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Enter your name"
                 required
-                placeholder="Your name"
               />
             </div>
 
@@ -100,9 +101,9 @@ export default function Onboarding() {
                 <Input
                   id="height"
                   type="number"
-                  value={heightCm}
-                  onChange={(e) => setHeightCm(e.target.value)}
-                  placeholder="170"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  min="1"
                 />
               </div>
               <div className="space-y-2">
@@ -110,40 +111,36 @@ export default function Onboarding() {
                 <Input
                   id="weight"
                   type="number"
-                  step="0.1"
-                  value={weightKg}
-                  onChange={(e) => setWeightKg(e.target.value)}
-                  placeholder="70"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  min="1"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="stepGoal">Daily Step Goal *</Label>
+              <Label htmlFor="dailyStepGoal">Daily Step Goal</Label>
               <Input
-                id="stepGoal"
+                id="dailyStepGoal"
                 type="number"
                 value={dailyStepGoal}
                 onChange={(e) => setDailyStepGoal(e.target.value)}
-                required
                 min="1000"
-                placeholder="10000"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="capybaraName">Capybara Name *</Label>
+              <Label htmlFor="capybaraName">Your Capybara's Name</Label>
               <Input
                 id="capybaraName"
                 value={capybaraName}
                 onChange={(e) => setCapybaraName(e.target.value)}
-                required
-                placeholder="Happy"
+                placeholder="Hamtaro"
               />
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Saving...' : 'Complete Setup'}
+              {loading ? 'Creating Profile...' : 'Start Your Journey'}
             </Button>
           </form>
         </CardContent>
