@@ -1,10 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import capybaraHungry from "@/assets/capybara-hungry.png";
+import capybaraSlightlyHappy from "@/assets/capybara-slightly-happy.png";
+import capybaraHappy from "@/assets/capybara-happy.png";
+import capybaraSuperHappy from "@/assets/capybara-super-happy.png";
 import capyfitLogo from "@/assets/capyfit-logo.png";
 import { Footprints, Heart, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const growthStages = [
+  { image: capybaraHungry, label: "Baby", emoji: "🍼" },
+  { image: capybaraSlightlyHappy, label: "Teenager", emoji: "🎒" },
+  { image: capybaraHappy, label: "Adult", emoji: "💼" },
+  { image: capybaraSuperHappy, label: "Senior", emoji: "🌟" },
+];
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [currentStage, setCurrentStage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStage((prev) => (prev + 1) % growthStages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -22,7 +42,7 @@ const Landing = () => {
             <img 
               src={capyfitLogo} 
               alt="CapyFit Logo" 
-              className="w-64 h-64 md:w-80 md:h-80 mx-auto object-contain drop-shadow-lg rounded-full"
+              className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg rounded-3xl"
             />
             <p className="text-xl md:text-2xl text-muted-foreground">
               Transform your daily walks into a heartwarming journey
@@ -31,19 +51,42 @@ const Landing = () => {
 
           {/* Hero Section */}
           <div className="p-8 md:p-12 max-w-3xl w-full animate-scale-in">
-            <div className="space-y-6 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                Walk 10,000 steps daily.<br />
-                Keep your capybara happy! 🎉
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Meet your new fitness companion! Every day you hit your step goal, 
-                you earn a banana to feed your adorable capybara. Miss a day? 
-                Your capybara gets hungry. Build your streak and watch your friend thrive!
-              </p>
-              <p className="text-lg text-foreground font-semibold">
-                🍼 Watch your capybara grow from baby → teenager → adult → senior as you keep feeding them! 🌟
-              </p>
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              {/* Capybara Image Slideshow */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-4">
+                <div className="relative w-48 h-48 md:w-64 md:h-64">
+                  {growthStages.map((stage, index) => (
+                    <img
+                      key={stage.label}
+                      src={stage.image}
+                      alt={`${stage.label} Capybara`}
+                      className={`absolute top-0 left-0 w-full h-full object-contain drop-shadow-2xl transition-opacity duration-500 ${
+                        index === currentStage ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                  <span>{growthStages[currentStage].emoji}</span>
+                  <span>{growthStages[currentStage].label}</span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="space-y-6 text-center">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                  Walk 10,000 steps daily.<br />
+                  Keep your capybara happy! 🎉
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Meet your new fitness companion! Every day you hit your step goal, 
+                  you earn a banana to feed your adorable capybara. Miss a day? 
+                  Your capybara gets hungry. Build your streak and watch your friend thrive!
+                </p>
+                <p className="text-lg text-foreground font-semibold">
+                  🍼 Watch your capybara grow from baby → teenager → adult → senior as you keep feeding them! 🌟
+                </p>
+              </div>
             </div>
           </div>
 
