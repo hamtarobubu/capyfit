@@ -38,7 +38,7 @@ const Landing = () => {
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
         <div className="flex flex-col items-center text-center space-y-12">
           {/* Header */}
-          <header className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 shadow-[var(--shadow-card)] space-y-4 animate-fade-in max-w-3xl w-full">
+          <header className="p-8 space-y-4 animate-fade-in max-w-3xl w-full">
             <img 
               src={capyfitLogo} 
               alt="CapyFit Logo" 
@@ -50,7 +50,7 @@ const Landing = () => {
           </header>
 
           {/* Hero Section */}
-          <div className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-[var(--shadow-card)] max-w-3xl w-full animate-scale-in">
+          <div className="p-8 md:p-12 max-w-3xl w-full animate-scale-in">
             <div className="flex flex-col md:flex-row items-center gap-8">
               {/* Capybara Image Slideshow */}
               <div className="flex-shrink-0 flex flex-col items-center gap-4">
