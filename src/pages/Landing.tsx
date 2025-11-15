@@ -4,6 +4,7 @@ import capybaraHungry from "@/assets/capybara-hungry.png";
 import capybaraSlightlyHappy from "@/assets/capybara-slightly-happy.png";
 import capybaraHappy from "@/assets/capybara-happy.png";
 import capybaraSuperHappy from "@/assets/capybara-super-happy.png";
+import capyfitLogo from "@/assets/capyfit-logo.png";
 import { Footprints, Heart, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -38,9 +39,11 @@ const Landing = () => {
         <div className="flex flex-col items-center text-center space-y-12">
           {/* Header */}
           <header className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 shadow-[var(--shadow-card)] space-y-4 animate-fade-in max-w-3xl w-full">
-            <h1 className="text-6xl md:text-7xl font-bold text-foreground drop-shadow-lg">
-              CapyFit
-            </h1>
+            <img 
+              src={capyfitLogo} 
+              alt="CapyFit Logo" 
+              className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg"
+            />
             <p className="text-xl md:text-2xl text-muted-foreground">
               Transform your daily walks into a heartwarming journey
             </p>
