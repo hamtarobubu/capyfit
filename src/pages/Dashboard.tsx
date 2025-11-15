@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CapybaraDisplay } from '@/components/CapybaraDisplay';
 import { ProgressBar } from '@/components/ProgressBar';
 import { toast } from 'sonner';
@@ -20,6 +21,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [feeding, setFeeding] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [historicalData, setHistoricalData] = useState<{ date: string; steps: number }[]>([]);
   const navigate = useNavigate();
   const { user, session } = useAuth();
 
@@ -85,6 +88,22 @@ export default function Dashboard() {
 
       if (bananaData) {
         setBananas(bananaData.banana_count);
+      }
+
+      // Load last 7 days of step data
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+      const startDate = sevenDaysAgo.toISOString().split('T')[0];
+
+      const { data: histData } = await supabase
+        .from('daily_steps')
+        .select('date, steps')
+        .eq('user_id', user.id)
+        .gte('date', startDate)
+        .order('date', { ascending: false });
+
+      if (histData) {
+        setHistoricalData(histData);
       }
     } catch (error: any) {
       console.error('Error loading user data:', error);
@@ -192,36 +211,94 @@ export default function Dashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Today's Steps</CardTitle>
-            <CardDescription>Track your progress towards your daily goal</CardDescription>
+            <CardTitle>Step Tracking</CardTitle>
+            <CardDescription>View your progress by day</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <ProgressBar steps={todaySteps} goal={goal} />
-            
-            <div className="space-y-2">
-              <Label htmlFor="steps">Update Today's Steps</Label>
-              <div className="flex gap-2">
-                <Input
-                  id="steps"
-                  type="number"
-                  value={steps}
-                  onChange={(e) => setSteps(e.target.value)}
-                  min="0"
-                />
-                <Button onClick={handleUpdateSteps} disabled={loading}>
-                  {loading ? 'Updating...' : 'Update'}
-                </Button>
-              </div>
-            </div>
+          <CardContent>
+            <Tabs value={selectedDate} onValueChange={setSelectedDate}>
+              <TabsList className="grid w-full grid-cols-7">
+                {(() => {
+                  const tabs = [];
+                  for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    const dateStr = date.toISOString().split('T')[0];
+                    const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                    const isToday = dateStr === currentDate;
+                    
+                    tabs.push(
+                      <TabsTrigger key={dateStr} value={dateStr} className="text-xs">
+                        {isToday ? 'Today' : dayName}
+                      </TabsTrigger>
+                    );
+                  }
+                  return tabs;
+                })()}
+              </TabsList>
+              
+              {(() => {
+                const tabContents = [];
+                for (let i = 6; i >= 0; i--) {
+                  const date = new Date();
+                  date.setDate(date.getDate() - i);
+                  const dateStr = date.toISOString().split('T')[0];
+                  const isToday = dateStr === currentDate;
+                  const histEntry = historicalData.find(d => d.date === dateStr);
+                  const daySteps = histEntry?.steps || 0;
+                  
+                  tabContents.push(
+                    <TabsContent key={dateStr} value={dateStr} className="space-y-4 mt-4">
+                      <div className="text-center mb-4">
+                        <p className="text-lg font-semibold">
+                          {date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                        </p>
+                      </div>
+                      
+                      <ProgressBar steps={daySteps} goal={goal} />
+                      
+                      {isToday && (
+                        <>
+                          <div className="space-y-2">
+                            <Label htmlFor="steps">Update Today's Steps</Label>
+                            <div className="flex gap-2">
+                              <Input
+                                id="steps"
+                                type="number"
+                                value={steps}
+                                onChange={(e) => setSteps(e.target.value)}
+                                min="0"
+                              />
+                              <Button onClick={handleUpdateSteps} disabled={loading}>
+                                {loading ? 'Updating...' : 'Update'}
+                              </Button>
+                            </div>
+                          </div>
 
-            <Button 
-              onClick={handleFeed} 
-              disabled={!canFeed || feeding}
-              className="w-full"
-              size="lg"
-            >
-              {feeding ? 'Feeding...' : canFeed ? `Feed ${capybaraName}` : 'No bananas available'}
-            </Button>
+                          <Button 
+                            onClick={handleFeed} 
+                            disabled={!canFeed || feeding}
+                            className="w-full"
+                            size="lg"
+                          >
+                            {feeding ? 'Feeding...' : canFeed ? `Feed ${capybaraName}` : 'No bananas available'}
+                          </Button>
+                        </>
+                      )}
+                      
+                      {!isToday && (
+                        <div className="text-center text-muted-foreground">
+                          <p>Final step count: {daySteps.toLocaleString()} steps</p>
+                          <p className="text-sm mt-1">
+                            {daySteps >= goal ? '✅ Goal achieved!' : `${(goal - daySteps).toLocaleString()} steps short of goal`}
+                          </p>
+                        </div>
+                      )}
+                    </TabsContent>
+                  );
+                }
+                return tabContents;
+              })()}
+            </Tabs>
           </CardContent>
         </Card>
       </div>
