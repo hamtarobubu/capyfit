@@ -44,9 +44,10 @@ const Landing = () => {
               alt="CapyFit Logo" 
               className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg rounded-3xl"
             />
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              Transform your daily walks into a heartwarming journey
-            </p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Walk 10,000 steps daily.<br />
+              Keep your capybara happy! 🎉
+            </h2>
           </header>
 
           {/* Hero Section */}
@@ -74,10 +75,6 @@ const Landing = () => {
 
               {/* Content */}
               <div className="space-y-6 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                  Walk 10,000 steps daily.<br />
-                  Keep your capybara happy! 🎉
-                </h2>
                 <p className="text-lg text-muted-foreground">
                   Meet your new fitness companion! Every day you hit your step goal, 
                   you earn a banana to feed your adorable capybara. Miss a day? 
