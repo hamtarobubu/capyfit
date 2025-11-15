@@ -142,7 +142,13 @@ export default function Dashboard() {
         <Card className="bg-gradient-to-br from-[hsl(var(--card-gradient-start))] to-[hsl(var(--card-gradient-end))] border-[hsl(var(--card-border))] shadow-[var(--shadow-card)]">
           <CardContent className="pt-6">
             <div className="text-center space-y-4">
-              <h2 className="text-2xl font-bold text-foreground">How is {capybaraName} today?</h2>
+              <h2 className="text-2xl font-bold text-foreground">
+                {fedToday 
+                  ? `${capybaraName} is happy` 
+                  : bananas < 1 
+                    ? `${capybaraName} is staring` 
+                    : `How is ${capybaraName} today?`}
+              </h2>
               <CapybaraDisplay steps={todaySteps} goalReached={todaySteps >= goal} isFeeding={fedToday} />
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div className="space-y-1">
