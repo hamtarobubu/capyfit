@@ -1,10 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import capybaraHappy from "@/assets/capybara-super-happy.png";
+import capybaraHungry from "@/assets/capybara-hungry.png";
+import capybaraSlightlyHappy from "@/assets/capybara-slightly-happy.png";
+import capybaraHappy from "@/assets/capybara-happy.png";
+import capybaraSuperHappy from "@/assets/capybara-super-happy.png";
 import { Footprints, Heart, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const growthStages = [
+  { image: capybaraHungry, label: "Baby", emoji: "🍼" },
+  { image: capybaraSlightlyHappy, label: "Teenager", emoji: "🎒" },
+  { image: capybaraHappy, label: "Adult", emoji: "💼" },
+  { image: capybaraSuperHappy, label: "Senior", emoji: "🌟" },
+];
 
 const Landing = () => {
   const navigate = useNavigate();
+  const [currentStage, setCurrentStage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStage((prev) => (prev + 1) % growthStages.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--gradient-nature)] relative overflow-hidden">
@@ -30,13 +49,24 @@ const Landing = () => {
           {/* Hero Section */}
           <div className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-[var(--shadow-card)] max-w-3xl w-full animate-scale-in">
             <div className="flex flex-col md:flex-row items-center gap-8">
-              {/* Capybara Image */}
-              <div className="flex-shrink-0">
-                <img
-                  src={capybaraHappy}
-                  alt="Happy Capybara"
-                  className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl"
-                />
+              {/* Capybara Image Slideshow */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-4">
+                <div className="relative w-48 h-48 md:w-64 md:h-64">
+                  {growthStages.map((stage, index) => (
+                    <img
+                      key={stage.label}
+                      src={stage.image}
+                      alt={`${stage.label} Capybara`}
+                      className={`absolute top-0 left-0 w-full h-full object-contain drop-shadow-2xl transition-opacity duration-500 ${
+                        index === currentStage ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                  <span>{growthStages[currentStage].emoji}</span>
+                  <span>{growthStages[currentStage].label}</span>
+                </div>
               </div>
 
               {/* Content */}
