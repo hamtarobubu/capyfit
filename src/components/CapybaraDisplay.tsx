@@ -53,12 +53,8 @@ export const CapybaraDisplay = ({ steps, goalReached, isFeeding, isStarving = fa
           className="w-64 h-64 object-contain drop-shadow-xl"
         />
         {isStarving && (
-          <>
-            <div className="absolute top-[35%] left-[42%] w-3 h-4 bg-blue-400 rounded-full opacity-80 animate-[drip_2s_ease-in-out_infinite]" 
-                 style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
-            <div className="absolute top-[35%] right-[42%] w-3 h-4 bg-blue-400 rounded-full opacity-80 animate-[drip_2s_ease-in-out_infinite_0.5s]" 
-                 style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
-          </>
+          <div className="absolute top-[38%] left-[45%] w-3 h-4 bg-blue-400 rounded-full opacity-80 animate-drip" 
+               style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }} />
         )}
       </div>
     </div>
