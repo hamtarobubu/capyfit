@@ -91,7 +91,7 @@ const Landing = () => {
           </div>
 
           {/* Features */}
-          <div className="grid md:grid-cols-3 gap-4 w-full max-w-4xl">
+          <div className="grid md:grid-cols-3 gap-4 w-full max-w-3xl">
             <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex flex-col items-center text-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <Footprints className="w-5 h-5 text-primary" />
