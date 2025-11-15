@@ -50,6 +50,9 @@ const Landing = () => {
                   you earn a banana to feed your adorable capybara. Miss a day? 
                   Your capybara gets hungry. Build your streak and watch your friend thrive!
                 </p>
+                <p className="text-lg text-foreground font-semibold">
+                  🍼 Watch your capybara grow from baby → teenager → adult → senior as you keep feeding them! 🌟
+                </p>
               </div>
             </div>
           </div>
