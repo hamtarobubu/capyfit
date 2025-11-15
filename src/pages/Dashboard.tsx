@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [historicalData, setHistoricalData] = useState<{ date: string; steps: number }[]>([]);
+  const [fedToday, setFedToday] = useState(false);
   const navigate = useNavigate();
   const { user, session } = useAuth();
 
@@ -105,6 +106,18 @@ export default function Dashboard() {
       if (histData) {
         setHistoricalData(histData);
       }
+
+      // Check if fed today
+      const { data: feedData } = await supabase
+        .from('transactions')
+        .select('created_at')
+        .eq('user_id', user.id)
+        .eq('transaction_type', 'feed')
+        .gte('created_at', `${today}T00:00:00`)
+        .lte('created_at', `${today}T23:59:59`)
+        .maybeSingle();
+
+      setFedToday(!!feedData);
     } catch (error: any) {
       console.error('Error loading user data:', error);
     }
@@ -155,6 +168,7 @@ export default function Dashboard() {
       if (error) throw error;
 
       setBananas(data.remainingBananas);
+      setFedToday(true);
       toast.success(`${capybaraName} enjoyed the banana!`);
     } catch (error: any) {
       toast.error(error.message || 'Failed to feed capybara');
@@ -204,7 +218,7 @@ export default function Dashboard() {
             />
             <div className="text-center">
               <p className="text-xl font-bold">
-                🍌 {bananas} Bananas Available • {bananas === 0 ? `${capybaraName} is starving!` : `Feed ${capybaraName}`}
+                🍌 {bananas} Bananas Available • {fedToday ? `${capybaraName} is happy!` : `${capybaraName} is starving!`}
               </p>
               <p className="text-muted-foreground">Earned: {bananasEarned} from today's steps</p>
             </div>
