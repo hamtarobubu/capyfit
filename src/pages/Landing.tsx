@@ -38,11 +38,11 @@ const Landing = () => {
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
         <div className="flex flex-col items-center text-center space-y-8">
           {/* Header */}
-          <header className="p-8 space-y-12 animate-fade-in max-w-3xl w-full">
+          <header className="p-8 animate-fade-in max-w-3xl w-full flex flex-col items-center gap-12">
             <img 
               src={capyfitLogo} 
               alt="CapyFit Logo" 
-              className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg rounded-3xl"
+              className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-lg rounded-3xl"
             />
             <h2 className="text-2xl md:text-3xl font-bold text-foreground">
               Walk 10,000 steps daily.<br />
