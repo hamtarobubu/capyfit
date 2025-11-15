@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [historicalData, setHistoricalData] = useState<{ date: string; steps: number }[]>([]);
   const [fedToday, setFedToday] = useState(false);
+  const [stepsSubmittedToday, setStepsSubmittedToday] = useState(false);
   const navigate = useNavigate();
   const { user, session } = useAuth();
 
@@ -42,6 +43,7 @@ export default function Dashboard() {
         setCurrentDate(newDate);
         setTodaySteps(0);
         setSteps('0');
+        setStepsSubmittedToday(false);
         loadUserData();
         toast.info('New day! Your step counter has been reset.');
       }
@@ -78,6 +80,9 @@ export default function Dashboard() {
       if (stepsData) {
         setTodaySteps(stepsData.steps);
         setSteps(stepsData.steps.toString());
+        setStepsSubmittedToday(true);
+      } else {
+        setStepsSubmittedToday(false);
       }
 
       // Load bananas
@@ -138,6 +143,7 @@ export default function Dashboard() {
       if (error) throw error;
 
       setTodaySteps(parseInt(steps));
+      setStepsSubmittedToday(true);
       
       // Calculate earned bananas
       const earned = Math.floor(parseInt(steps) / goal);
@@ -275,7 +281,9 @@ export default function Dashboard() {
                       {isToday && (
                         <>
                           <div className="space-y-2">
-                            <Label htmlFor="steps">Update Today's Steps</Label>
+                            <Label htmlFor="steps">
+                              {stepsSubmittedToday ? "Today's Steps (Locked)" : "Update Today's Steps"}
+                            </Label>
                             <div className="flex gap-2">
                               <Input
                                 id="steps"
@@ -283,11 +291,17 @@ export default function Dashboard() {
                                 value={steps}
                                 onChange={(e) => setSteps(e.target.value)}
                                 min="0"
+                                disabled={stepsSubmittedToday}
                               />
-                              <Button onClick={handleUpdateSteps} disabled={loading}>
-                                {loading ? 'Updating...' : 'Update'}
+                              <Button onClick={handleUpdateSteps} disabled={loading || stepsSubmittedToday}>
+                                {loading ? 'Updating...' : stepsSubmittedToday ? 'Submitted' : 'Update'}
                               </Button>
                             </div>
+                            {stepsSubmittedToday && (
+                              <p className="text-sm text-muted-foreground">
+                                Steps can be updated again tomorrow
+                              </p>
+                            )}
                           </div>
 
                           <Button 
