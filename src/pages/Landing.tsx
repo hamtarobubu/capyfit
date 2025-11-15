@@ -28,6 +28,18 @@ const Landing = () => {
               Walk 10,000 steps daily.<br />
               Keep your capybara happy! 🎉
             </h2>
+            <div className="space-y-4">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 h-auto hover-scale shadow-[var(--shadow-card)]"
+                onClick={() => navigate("/onboarding")}
+              >
+                Start Now - Name Your Capybara! 🐾
+              </Button>
+              <p className="text-sm text-muted-foreground">
+                Free to start • No credit card required • Takes 2 minutes
+              </p>
+            </div>
           </header>
 
           {/* Hero Section */}
