@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [capybaraName, setCapybaraName] = useState('Happy');
   const [loading, setLoading] = useState(false);
   const [feeding, setFeeding] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0]);
   const navigate = useNavigate();
   const { user, session } = useAuth();
 
@@ -29,7 +30,21 @@ export default function Dashboard() {
     }
 
     loadUserData();
-  }, [user, navigate]);
+
+    // Check for day change every minute
+    const interval = setInterval(() => {
+      const newDate = new Date().toISOString().split('T')[0];
+      if (newDate !== currentDate) {
+        setCurrentDate(newDate);
+        setTodaySteps(0);
+        setSteps('0');
+        loadUserData();
+        toast.info('New day! Your step counter has been reset.');
+      }
+    }, 60000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, [user, navigate, currentDate]);
 
   const loadUserData = async () => {
     if (!user) return;
@@ -158,7 +173,9 @@ export default function Dashboard() {
         <Card>
           <CardHeader>
             <CardTitle>{capybaraName}'s Status</CardTitle>
-            <CardDescription>Keep your capybara happy by feeding them!</CardDescription>
+            <CardDescription>
+              Keep your capybara happy by feeding them! • {new Date(currentDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <CapybaraDisplay 
