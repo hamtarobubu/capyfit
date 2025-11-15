@@ -206,9 +206,9 @@ export default function Dashboard() {
                       size="lg"
                     >
                       {fedToday 
-                        ? `${capybaraName} is full! Come back tomorrow` 
+                        ? `${capybaraName} is happy` 
                         : bananas < 1 
-                          ? 'Need bananas to feed!' 
+                          ? `${capybaraName} is staring` 
                           : `Feed ${capybaraName} (1 🍌)`}
                     </Button>
                   </>
