@@ -218,7 +218,7 @@ export default function Dashboard() {
             />
             <div className="text-center">
               <p className="text-xl font-bold">
-                🍌 {bananas} Bananas Available • {fedToday ? `${capybaraName} is happy!` : `${capybaraName} is starving!`}
+                🍌 {bananas} Bananas Available • {todaySteps >= goal ? `${capybaraName} is happy!` : `${capybaraName} is starving!`}
               </p>
               <p className="text-muted-foreground">Earned: {bananasEarned} from today's steps</p>
             </div>
