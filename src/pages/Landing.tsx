@@ -18,11 +18,11 @@ const Landing = () => {
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
         <div className="flex flex-col items-center text-center space-y-12">
           {/* Header */}
-          <header className="space-y-4 animate-fade-in">
+          <header className="bg-card/80 backdrop-blur-sm rounded-3xl p-8 shadow-[var(--shadow-card)] space-y-4 animate-fade-in max-w-3xl w-full">
             <h1 className="text-6xl md:text-7xl font-bold text-foreground drop-shadow-lg">
               CapyFit
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl">
+            <p className="text-xl md:text-2xl text-muted-foreground">
               Transform your daily walks into a heartwarming journey
             </p>
           </header>
@@ -35,12 +35,12 @@ const Landing = () => {
                 <img
                   src={capybaraHappy}
                   alt="Happy Capybara"
-                  className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl animate-bounce"
+                  className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl"
                 />
               </div>
 
               {/* Content */}
-              <div className="space-y-6 text-left">
+              <div className="space-y-6 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                   Walk 10,000 steps daily.<br />
                   Keep your capybara happy! 🎉
