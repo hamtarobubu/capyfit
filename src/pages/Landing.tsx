@@ -27,7 +27,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--gradient-nature)] relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-32 h-32 bg-grass-green rounded-full blur-3xl"></div>
