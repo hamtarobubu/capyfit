@@ -64,7 +64,7 @@ export default function Onboarding() {
         <img 
           src={capybaraTreadmill} 
           alt="Capybara exercising" 
-          className="absolute top-4 right-4 w-20 h-20 object-contain z-10"
+          className="absolute top-4 right-4 w-20 h-20 object-contain z-10 animate-bounce"
         />
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to CapyFit!</CardTitle>
