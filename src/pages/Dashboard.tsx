@@ -146,7 +146,7 @@ export default function Dashboard() {
                 {fedToday 
                   ? `${capybaraName} is happy` 
                   : bananas < 1 
-                    ? `${capybaraName} is staring` 
+                    ? `${capybaraName} is starving` 
                     : `How is ${capybaraName} today?`}
               </h2>
               <CapybaraDisplay steps={todaySteps} goalReached={todaySteps >= goal} isFeeding={fedToday} />
