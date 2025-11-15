@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
 import { getCapybaraData, saveCapybaraData, hasOnboardingData } from '@/utils/localStorageHelper';
+import capybaraTreadmill from '@/assets/capybara-treadmill.png';
 
 export default function Onboarding() {
   const [displayName, setDisplayName] = useState('');
@@ -59,7 +60,12 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--grass-green))] via-[hsl(var(--water-blue))] to-[hsl(var(--capybara-brown))] flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-gradient-to-br from-[hsl(var(--card-gradient-start))] to-[hsl(var(--card-gradient-end))] border-[hsl(var(--card-border))] shadow-[var(--shadow-card)]">
+      <Card className="w-full max-w-md bg-gradient-to-br from-[hsl(var(--card-gradient-start))] to-[hsl(var(--card-gradient-end))] border-[hsl(var(--card-border))] shadow-[var(--shadow-card)] relative">
+        <img 
+          src={capybaraTreadmill} 
+          alt="Capybara exercising" 
+          className="absolute top-4 right-4 w-20 h-20 object-contain z-10"
+        />
         <CardHeader>
           <CardTitle className="text-2xl">Welcome to CapyFit!</CardTitle>
           <CardDescription>Let's set up your profile and meet your capybara</CardDescription>
