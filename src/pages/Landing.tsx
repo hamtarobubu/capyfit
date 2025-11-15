@@ -42,7 +42,7 @@ const Landing = () => {
             <img 
               src={capyfitLogo} 
               alt="CapyFit Logo" 
-              className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg"
+              className="w-48 h-48 md:w-64 md:h-64 mx-auto object-contain drop-shadow-lg rounded-3xl"
             />
             <p className="text-xl md:text-2xl text-muted-foreground">
               Transform your daily walks into a heartwarming journey
