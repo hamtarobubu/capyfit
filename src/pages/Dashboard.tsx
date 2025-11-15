@@ -203,7 +203,7 @@ export default function Dashboard() {
               isFeeding={feeding}
             />
             <div className="text-center">
-              <p className="text-2xl font-bold">
+              <p className="text-xl font-bold">
                 🍌 {bananas} Bananas Available • {bananas === 0 ? `${capybaraName} is starving!` : `Feed ${capybaraName}`}
               </p>
               <p className="text-muted-foreground">Earned: {bananasEarned} from today's steps</p>
