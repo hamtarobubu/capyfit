@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import capybaraHappy from "@/assets/capybara-happy.png";
 import capybaraHungry from "@/assets/capybara-hungry.png";
+import capybaraSlightlyHappy from "@/assets/capybara-slightly-happy.png";
+import capybaraHappy from "@/assets/capybara-happy.png";
+import capybaraVeryHappy from "@/assets/capybara-very-happy.png";
+import capybaraSuperHappy from "@/assets/capybara-super-happy.png";
+import capybaraGoalReached from "@/assets/capybara-goal-reached.png";
 import capybaraEating from "@/assets/capybara-eating.png";
 import { cn } from "@/lib/utils";
 
@@ -20,9 +24,15 @@ export const CapybaraDisplay = ({ steps, goalReached, isFeeding }: CapybaraDispl
       setBounce(true);
       setTimeout(() => setBounce(false), 1000);
     } else if (goalReached) {
+      setCurrentImage(capybaraGoalReached);
+    } else if (steps >= 9000) {
+      setCurrentImage(capybaraSuperHappy);
+    } else if (steps >= 8000) {
+      setCurrentImage(capybaraVeryHappy);
+    } else if (steps >= 5000) {
       setCurrentImage(capybaraHappy);
-    } else if (steps > 5000) {
-      setCurrentImage(capybaraHappy);
+    } else if (steps >= 4000) {
+      setCurrentImage(capybaraSlightlyHappy);
     } else {
       setCurrentImage(capybaraHungry);
     }
