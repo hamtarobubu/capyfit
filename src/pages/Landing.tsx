@@ -78,7 +78,7 @@ const Landing = () => {
           </div>
 
           {/* CTA */}
-          <div className="space-y-4 animate-fade-in">
+          <div className="space-y-4 animate-fade-in mt-12">
             <Button 
               size="lg" 
               className="text-lg px-8 py-6 h-auto hover-scale shadow-[var(--shadow-card)]"
