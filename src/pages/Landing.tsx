@@ -16,7 +16,7 @@ const Landing = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-16 max-w-6xl">
-        <div className="flex flex-col items-center text-center space-y-4">
+        <div className="flex flex-col items-center text-center space-y-6">
           {/* Header */}
           <header className="p-8 animate-fade-in max-w-3xl w-full flex flex-col items-center gap-12">
             <img 
