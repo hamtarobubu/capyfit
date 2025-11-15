@@ -218,9 +218,9 @@ export default function Dashboard() {
             />
             <div className="text-center">
               <p className="text-xl font-bold">
-                🍌 {bananas} Bananas Available • {todaySteps >= goal ? `${capybaraName} is happy!` : `${capybaraName} is starving!`}
+                {todaySteps >= goal ? `${capybaraName} is happy! 😊` : `${capybaraName} is starving! 😢`}
               </p>
-              <p className="text-muted-foreground">Earned: {bananasEarned} from today's steps</p>
+              <p className="text-muted-foreground">Earned: {bananasEarned} banana(s) from today's steps</p>
             </div>
           </CardContent>
         </Card>
