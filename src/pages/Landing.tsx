@@ -96,7 +96,7 @@ const Landing = () => {
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                 <Footprints className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 text-center">
                 <h3 className="text-base font-semibold text-foreground">Track Your Steps</h3>
                 <p className="text-sm text-muted-foreground">Monitor your daily progress toward the 10,000-step goal</p>
               </div>
@@ -106,7 +106,7 @@ const Landing = () => {
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                 <Heart className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 text-center">
                 <h3 className="text-base font-semibold text-foreground">Feed Your Friend</h3>
                 <p className="text-sm text-muted-foreground">Earn bananas and keep your capybara well-fed and happy</p>
               </div>
@@ -116,7 +116,7 @@ const Landing = () => {
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
                 <TrendingUp className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-1 text-center">
                 <h3 className="text-base font-semibold text-foreground">Build Your Streak</h3>
                 <p className="text-sm text-muted-foreground">Maintain consistency and watch your streak grow</p>
               </div>
