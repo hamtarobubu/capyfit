@@ -93,10 +93,21 @@ export default {
             height: "0",
           },
         },
+        "drip": {
+          "0%, 100%": {
+            transform: "translateY(0) scale(1)",
+            opacity: "0.8",
+          },
+          "50%": {
+            transform: "translateY(8px) scale(0.9)",
+            opacity: "0.5",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "drip": "drip 2s ease-in-out infinite",
       },
     },
   },

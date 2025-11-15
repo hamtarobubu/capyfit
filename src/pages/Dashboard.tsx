@@ -149,7 +149,7 @@ export default function Dashboard() {
                     ? `${capybaraName} is starving` 
                     : `How is ${capybaraName} today?`}
               </h2>
-              <CapybaraDisplay steps={todaySteps} goalReached={todaySteps >= goal} isFeeding={fedToday} />
+              <CapybaraDisplay steps={todaySteps} goalReached={todaySteps >= goal} isFeeding={fedToday} isStarving={bananas < 1 && !fedToday} />
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div className="space-y-1">
                   <p className="text-2xl font-bold text-foreground">{todaySteps}</p>
