@@ -17,8 +17,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 30 15% 15%;
 
-    --primary: 140 45% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 90 60% 55%;
+    --primary-foreground: 30 15% 15%;
 
     --secondary: 35 80% 65%;
     --secondary-foreground: 30 15% 15%;
@@ -34,7 +34,7 @@ All colors MUST be HSL.
 
     --border: 45 15% 85%;
     --input: 45 15% 85%;
-    --ring: 140 45% 50%;
+    --ring: 90 60% 55%;
 
     --radius: 1rem;
 
@@ -69,8 +69,8 @@ All colors MUST be HSL.
     --popover: 30 15% 12%;
     --popover-foreground: 45 15% 95%;
 
-    --primary: 140 50% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 90 55% 50%;
+    --primary-foreground: 30 15% 15%;
 
     --secondary: 35 75% 55%;
     --secondary-foreground: 0 0% 100%;
@@ -86,7 +86,7 @@ All colors MUST be HSL.
 
     --border: 30 15% 20%;
     --input: 30 15% 20%;
-    --ring: 140 50% 45%;
+    --ring: 90 55% 50%;
     
     --success: 140 55% 40%;
     --success-foreground: 0 0% 100%;
