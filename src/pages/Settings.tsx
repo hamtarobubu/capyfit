@@ -1,82 +1,59 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
 import { ArrowLeft } from 'lucide-react';
+import { getCapybaraData, saveCapybaraData } from '@/utils/localStorageHelper';
 
 export default function Settings() {
   const [displayName, setDisplayName] = useState('');
-  const [gender, setGender] = useState('');
-  const [heightCm, setHeightCm] = useState('');
-  const [weightKg, setWeightKg] = useState('');
+  const [gender, setGender] = useState('other');
+  const [height, setHeight] = useState('170');
+  const [weight, setWeight] = useState('70');
   const [dailyStepGoal, setDailyStepGoal] = useState('10000');
-  const [capybaraName, setCapybaraName] = useState('');
+  const [capybaraName, setCapybaraName] = useState('Hamtaro');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
-
     loadProfile();
-  }, [user, navigate]);
+  }, []);
 
-  const loadProfile = async () => {
-    if (!user) return;
-
-    try {
-      const { data } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (data) {
-        setDisplayName(data.display_name || '');
-        setGender(data.gender || '');
-        setHeightCm(data.height_cm?.toString() || '');
-        setWeightKg(data.weight_kg?.toString() || '');
-        setDailyStepGoal(data.daily_step_goal?.toString() || '10000');
-        setCapybaraName(data.capybara_name || '');
-      }
-    } catch (error: any) {
-      console.error('Error loading profile:', error);
-    }
+  const loadProfile = () => {
+    const data = getCapybaraData();
+    
+    setDisplayName(data.userProfile.displayName);
+    setGender(data.userProfile.gender);
+    setHeight(data.userProfile.height.toString());
+    setWeight(data.userProfile.weight.toString());
+    setDailyStepGoal(data.dailyStepGoal.toString());
+    setCapybaraName(data.capybaraName);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
-
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          display_name: displayName,
-          gender: gender || null,
-          height_cm: heightCm ? parseInt(heightCm) : null,
-          weight_kg: weightKg ? parseFloat(weightKg) : null,
-          daily_step_goal: parseInt(dailyStepGoal),
-          capybara_name: capybaraName,
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
+      const data = getCapybaraData();
+      
+      data.userProfile = {
+        displayName: displayName.trim() || 'User',
+        gender,
+        height: parseInt(height) || 170,
+        weight: parseInt(weight) || 70,
+      };
+      data.dailyStepGoal = parseInt(dailyStepGoal) || 10000;
+      data.capybaraName = capybaraName.trim() || 'Hamtaro';
+      
+      saveCapybaraData(data);
       toast.success('Settings saved successfully!');
     } catch (error: any) {
-      toast.error(error.message || 'Failed to save settings');
+      toast.error('Failed to save settings');
     } finally {
       setLoading(false);
     }
@@ -92,20 +69,19 @@ export default function Settings() {
           <h1 className="text-3xl font-bold text-foreground">Settings</h1>
         </div>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-[hsl(var(--card-gradient-start))] to-[hsl(var(--card-gradient-end))] border-[hsl(var(--card-border))] shadow-[var(--shadow-card)]">
           <CardHeader>
             <CardTitle>Profile Settings</CardTitle>
-            <CardDescription>Update your profile and fitness goals</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="displayName">Display Name</Label>
                 <Input
                   id="displayName"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  required
+                  placeholder="Enter your name"
                 />
               </div>
 
@@ -133,8 +109,9 @@ export default function Settings() {
                   <Input
                     id="height"
                     type="number"
-                    value={heightCm}
-                    onChange={(e) => setHeightCm(e.target.value)}
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    min="1"
                   />
                 </div>
                 <div className="space-y-2">
@@ -142,37 +119,36 @@ export default function Settings() {
                   <Input
                     id="weight"
                     type="number"
-                    step="0.1"
-                    value={weightKg}
-                    onChange={(e) => setWeightKg(e.target.value)}
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    min="1"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="stepGoal">Daily Step Goal</Label>
+                <Label htmlFor="dailyStepGoal">Daily Step Goal</Label>
                 <Input
-                  id="stepGoal"
+                  id="dailyStepGoal"
                   type="number"
                   value={dailyStepGoal}
                   onChange={(e) => setDailyStepGoal(e.target.value)}
-                  required
                   min="1000"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="capybaraName">Capybara Name</Label>
+                <Label htmlFor="capybaraName">Capybara's Name</Label>
                 <Input
                   id="capybaraName"
                   value={capybaraName}
                   onChange={(e) => setCapybaraName(e.target.value)}
-                  required
+                  placeholder="Hamtaro"
                 />
               </div>
 
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? 'Saving...' : 'Save Changes'}
+                {loading ? 'Saving...' : 'Save Settings'}
               </Button>
             </form>
           </CardContent>
