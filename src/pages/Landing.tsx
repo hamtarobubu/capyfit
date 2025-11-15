@@ -92,31 +92,31 @@ const Landing = () => {
 
           {/* Features */}
           <div className="grid md:grid-cols-3 gap-4 w-full max-w-4xl">
-            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex items-start gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex flex-col items-center text-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <Footprints className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1 text-center">
+              <div className="space-y-1">
                 <h3 className="text-base font-semibold text-foreground">Track Your Steps</h3>
                 <p className="text-sm text-muted-foreground">Monitor your daily progress toward the 10,000-step goal</p>
               </div>
             </div>
 
-            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex items-start gap-3" style={{ animationDelay: "0.1s" }}>
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex flex-col items-center text-center gap-3" style={{ animationDelay: "0.1s" }}>
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <Heart className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1 text-center">
+              <div className="space-y-1">
                 <h3 className="text-base font-semibold text-foreground">Feed Your Friend</h3>
                 <p className="text-sm text-muted-foreground">Earn bananas and keep your capybara well-fed and happy</p>
               </div>
             </div>
 
-            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex items-start gap-3" style={{ animationDelay: "0.2s" }}>
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <div className="bg-card/60 backdrop-blur-sm rounded-xl p-4 shadow-[var(--shadow-card)] animate-fade-in flex flex-col items-center text-center gap-3" style={{ animationDelay: "0.2s" }}>
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-primary" />
               </div>
-              <div className="space-y-1 text-center">
+              <div className="space-y-1">
                 <h3 className="text-base font-semibold text-foreground">Build Your Streak</h3>
                 <p className="text-sm text-muted-foreground">Maintain consistency and watch your streak grow</p>
               </div>
